@@ -1,13 +1,13 @@
 # Azure Resource Auditor
 
-A Python-based security auditing tool for Microsoft Azure subscriptions. Built to identify misconfigurations, orphaned resources, and privilege escalation risks across an Azure environment.
+I built this security auditing tool in Python specifically for Microsoft Azure subscriptions. It's designed to help you catch those pesky misconfigurations, find resources that have been left behind (we've all been there!), and spot any privilege escalation risks lurking in your Azure environment.
 
-## What it does
+## Here’s what it does:
 
-- Scans all Resource Groups and flags empty/orphaned ones
-- Audits RBAC Role Assignments and detects overprivileged accounts
-- Pulls Security Center recommendations and flags unhealthy resources
-- Generates a clean HTML security report automatically
+- It scans all Resource Groups and highlights any that are empty or orphaned.
+- It audits RBAC Role Assignments to identify accounts that have too many privileges.
+- It pulls recommendations from the Security Center and flags any unhealthy resources.
+- It automatically generates a neat HTML security report.
 
 ## Tech Stack
 
@@ -19,25 +19,27 @@ A Python-based security auditing tool for Microsoft Azure subscriptions. Built t
 ## Setup & Usage
 
 1. Clone the repo
-   git clone https://github.com/YOUR_USERNAME/azure-resource-auditor.git
-   cd azure-resource-auditor
+   - git clone git@github.com:imAdityaSahu/azure-resource-auditor.git
+   - cd azure-resource-auditor
 
 2. Install dependencies
-   pip install -r requirements.txt
+   - pip install -r requirements.txt
 
 3. Login to Azure CLI
-   az login
+   - az login
 
-4. Create a .env file
-   AZURE_SUBSCRIPTION_ID=your-subscription-id-here
+4. Create a `.env` file
+   - AZURE_SUBSCRIPTION_ID=your-subscription-id-here
 
 5. Run the auditor
-   python3 auditor.py
+   - python3 auditor.py
 
 ## Output
 
-The tool outputs results in the terminal and generates a report.html file with a full visual security report.
+The tool displays results right in the terminal and creates a report.html file that contains a complete visual security report.
 
 ## Author
 
-Aditya Sahu — Cloud Security Enthusiast
+**Aditya Sahu** — Cloud Security Enthusiast
+
+[LinkedIn](https://www.linkedin.com/in/imadityasahu/)
