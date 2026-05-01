@@ -19,27 +19,29 @@ I built this security auditing tool in Python specifically for Microsoft Azure s
 ## Setup & Usage
 
 1. Clone the repo
-   - git clone git@github.com:imAdityaSahu/azure-resource-auditor.git
-   - cd azure-resource-auditor
+   - git clone https://github.com/imAdityaSahu/azure-resource-auditor.git
+   - `cd azure-resource-auditor`
 
 2. Install dependencies
-   - pip install -r requirements.txt
+   - `pip install -r requirements.txt`
 
 3. Login to Azure CLI
-   - az login
+   - `az login`
 
 4. Create a `.env` file
    - AZURE_SUBSCRIPTION_ID=your-subscription-id-here
 
 5. Run the auditor
-   - python3 auditor.py
+   - `python3 auditor.py`
 
 ## Output
 
 The tool displays results right in the terminal and creates a report.html file that contains a complete visual security report.
 
+---
+
 ## Author
 
-**Aditya Sahu** — Cloud Security Enthusiast
+👤 **Aditya Sahu** — Cloud Security Enthusiast
 
 [LinkedIn](https://www.linkedin.com/in/imadityasahu/)
