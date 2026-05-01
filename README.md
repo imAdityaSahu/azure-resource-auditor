@@ -36,7 +36,7 @@ I built this security auditing tool in Python specifically for Microsoft Azure s
 
 ## Output
 
-The tool displays results right in the terminal and creates a report.html file that contains a complete visual security report.
+The tool displays results right in the terminal and creates a `report.html` file that contains a complete visual security report.
 
 ---
 
