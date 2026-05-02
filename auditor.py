@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import os
 
 
-def generate_html_report(resource_groups, roles, role_names, recommendations):
+def generate_html_report(resource_groups, roles, role_names, recommendations, nsg_data):
     html = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +52,19 @@ def generate_html_report(resource_groups, roles, role_names, recommendations):
     <h2>Security Center</h2>
     <div class="card">
         {"<p class='good'>No security recommendations found.</p>" if not recommendations else "".join([f"<p class='risk'>⚠️ {rec.display_name} — Unhealthy: {rec.unhealthy_resource_count}</p>" for rec in recommendations])}
+    </div>
+
+    <h2>Network Security Groups</h2>
+    <div class="card">
+        <table>
+            <tr><th>Name</th><th>Resource Group</th><th>Location</th><th>Status</th></tr>
+            {"".join([
+                f"<tr><td>{n['name']}</td><td>{n['resource_group']}</td><td>{n['location']}</td><td class='risk'>🚨 Risk Detected</td></tr>"
+                if n['risk_found'] else
+                f"<tr><td>{n['name']}</td><td>{n['resource_group']}</td><td>{n['location']}</td><td class='good'>✅ Clean</td></tr>"
+                for n in nsg_data
+            ])}
+        </table>
     </div>
 
 </body>
@@ -154,7 +167,7 @@ print("\n[+] Scanning Network Security Groups...\n")
 
 nsgs = list(network_client.network_security_groups.list_all())
 
-nsg_data = list()
+nsg_data = []
 
 for nsg in nsgs:
     risk_found = False
@@ -170,15 +183,19 @@ for nsg in nsgs:
                 risk_found = True
     if not risk_found:
         print("  ✅ No risky rules found")
+    nsg_data.append({
+        "name": nsg.name,
+        "resource_group": nsg.id.split('/')[4],
+        "location": nsg.location,
+        "risk_found": risk_found,
+    })
 
     
     
-
-
 
 
 # Generate Report
-generate_html_report(resource_groups, roles, role_names, recommendations)
+generate_html_report(resource_groups, roles, role_names, recommendations, nsg_data)
 
 print("\n" + "=" * 50)
 print("   SCAN COMPLETE")
