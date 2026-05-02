@@ -2,6 +2,8 @@ from azure.identity import AzureCliCredential
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.authorization import AuthorizationManagementClient
 from azure.mgmt.security import SecurityCenter
+from azure.mgmt.network import NetworkManagementClient
+
 
 from dotenv import load_dotenv
 import os
@@ -141,6 +143,39 @@ else:
         if rec.unhealthy_resource_count > 0:
             print(f"  ⚠️  ACTION NEEDED")
         print("-" * 40)
+
+
+
+# NSG management
+network_client = NetworkManagementClient(credential, subscription_id)
+
+print("\n" + "="*50)
+print("\n[+] Scanning Network Security Groups...\n")
+
+nsgs = list(network_client.network_security_groups.list_all())
+
+nsg_data = list()
+
+for nsg in nsgs:
+    risk_found = False
+    print(f"  NSG            : {nsg.name}")
+    print(f"  Resource Group : {nsg.id.split('/')[4]}")
+    print(f"  Location       : {nsg.location}")
+    print("-" * 40)
+    for rule in nsg.security_rules:
+        if rule.direction == "Inbound" and rule.access == "Allow":
+            if rule.destination_port_range in ["22", "3389", "*"] and \
+               rule.source_address_prefix in ["*", "0.0.0.0/0", "Internet"]:
+                print(f"  🚨 RISK: Port {rule.destination_port_range} open to internet — Rule: {rule.name}")
+                risk_found = True
+    if not risk_found:
+        print("  ✅ No risky rules found")
+
+    
+    
+
+
+
 
 # Generate Report
 generate_html_report(resource_groups, roles, role_names, recommendations)
