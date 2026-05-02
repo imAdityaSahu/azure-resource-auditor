@@ -7,12 +7,13 @@ I built this security auditing tool in Python specifically for Microsoft Azure s
 - It scans all Resource Groups and highlights any that are empty or orphaned.
 - It audits RBAC Role Assignments to identify accounts that have too many privileges.
 - It pulls recommendations from the Security Center and flags any unhealthy resources.
+- Scans Network Security Groups (NSGs) and flags inbound rules exposing SSH (22) or RDP (3389) to the internet
 - It automatically generates a neat HTML security report.
 
 ## Tech Stack
 
 - Python 3
-- Azure SDK (azure-mgmt-resource, azure-mgmt-authorization, azure-mgmt-security)
+- Azure SDK (azure-mgmt-resource, azure-mgmt-authorization, azure-mgmt-security, azure-mgmt-network)
 - Azure CLI Authentication
 - python-dotenv
 
